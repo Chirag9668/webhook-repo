@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GitHub Event Tracker</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <meta http-equiv="refresh" content="15"> <!-- refresh every 15 seconds -->
+</head>
+<body>
+    <div class="container">
+        <h1>📝 GitHub Event Feed</h1>
+        <ul id="event-list">
+            {% for event in events %}
+                <li>
+                    {% if event.event_type == 'push' %}
+                        <li>{{ event.author }} pushed to {{ event.to_branch }} on {{ event.formatted_time }}</li>
+                    {% elif event.event_type == 'pull_request' %}
+                        <li>{{ event.author }} submitted a pull request from {{ event.from_branch }} to {{ event.to_branch }} on {{ event.formatted_time }}</li>
+                    {% elif event.event_type == 'merge' %}
+                        <li>{{ event.author }} merged branch {{ event.from_branch }} to {{ event.to_branch }} on {{ event.formatted_time }}</li>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
